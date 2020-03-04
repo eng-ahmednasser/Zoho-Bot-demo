@@ -1,50 +1,185 @@
 response = Map();
-info answers;
-if(context_id.equals("find_project"))
+// info answers;
+// info response;
+info context_id;
+if(answers.containKey("thanks"))
+{
+	response.put("action","end");
+	response.put("replies",{"Have a nice day"});
+	return response;
+}
+if(context_id.equals("cs") || context_id.equals("pm"))
 {
 	response.put("action","context");
-	response.put("context_id","find_project");
-	project_code = answers.get("project_code").get("text");
-	if(!project_code.equalsIgnoreCase("123"))
+	response.put("context_id",context_id);
+	selected_option = answers.get("selected_option").get("text");
+	if(selected_option.equalsIgnoreCase("Current Project"))
 	{
-		question = {"name":"project_code","replies":{"Sorry,Project code:" + project_code + " doesn't exist ! ","Please try again"}};
-		response.put("questions",{question});
-		return response;
-	}
-	else
-	{
-		if(!answers.containsKey("thanks"))
+		if(!answers.containsKey("project_code"))
 		{
-			replies = {"Total Achieved Sample : 100","Male Achieved Quota : 120","Fmale Achieved Quota : 120","SEC Achieved Quota : 10","QC Cancel Number : 100","Cities Achieved Quota : 200"};
-			// response.put("action","reply");
-						question = {"suggestions":replies};
-			question = {"name":"thanks","replies":replies,"suggestions":{"Thanks"}};
+			question = {"name":"project_code","replies":{"Great! I just need a few details about your project","To begin with, what's your project Code?"}};
 			response.put("questions",{question});
-			response.put("suggestions",replies);
+			return response;
+		}
+		project_code = answers.get("project_code").get("text");
+		if(!project_code.equalsIgnoreCase("123"))
+		{
+			question = {"name":"project_code","replies":{"Sorry,Project code:" + project_code + "   doesn't exist ! ","Please try again"}};
+			response.put("questions",{question});
 			return response;
 		}
 		else
 		{
-			// 			if(answers.get("thanks").get("text").equalsIgnoreCase('Find new project'))
-			// 			{
-			// 					answers.deleteKey("thanks");
-			// 					answers.remove('thanks');
-			// 					response.put("action","context");
-			// 					response.put("context_id","project_code");
-			// 					question = {"name":"project_code","replies":{"Great! what's your project Code?"}};
-			// 					response.put("questions",{question});
-			// 					return response;
-			// 			}
-			response.put("action","end");
-			response.put("replies",{"Have a nice day"});
-			return response;
+			replies = {"Total Achieved Sample : 534","Male Achieved Quota : 534","Fmale Achieved Quota : 234","SEC Achieved Quota : A = 30, B = 50, C = 214, DE = 240","QC Cancel Number : Cairo = 328, Alex = 206","Cities Achieved Quota : 23"};
+			question = {"name":"thanks","replies":replies,"suggestions":{"Thanks"}};
+			response.put("questions",{question});
+			response.put("suggestions",replies);
 		}
 	}
-	response.put("questions",{question});
+	else if(selected_option.equalsIgnoreCase("New Project") && context_id.equals("cs"))
+	{
+		if(!answers.containsKey("is_study_Maconomy"))
+		{
+			question = {"name":"is_study_Maconomy","replies":{"Did you open this study on Maconomy?"},"input":{"type":"select","options":{"Yes","No"}}};
+		}
+		else
+		{
+			is_study_Maconomy = answers.get("is_study_Maconomy").get("text");
+			if(!answers.containsKey("studyJN"))
+			{
+				question = {"name":"studyJN","replies":{"Would you please enter the study JN with me"}};
+			}
+			else
+			{
+				studyJN = answers.get("studyJN").get("text");
+				if(!answers.containsKey("finalDate"))
+				{
+					question = {"name":"finalDate","replies":{"When should we expect the final Materials?"}};
+				}
+				else
+				{
+					finalDate = answers.get("finalDate").get("text");
+					if(!answers.containsKey("deliveryDate"))
+					{
+						question = {"name":"deliveryDate","replies":{"What is the expected delivery date?"}};
+					}
+					else
+					{
+						deliveryDate = answers.get("deliveryDate").get("text");
+						if(!answers.containsKey("email"))
+						{
+							question = {"name":"email","replies":{"What is your email address?"}};
+						}
+						else
+						{
+							email = answers.get("email").get("text");
+							email_message = "Your Project created <br> Final Date : " + finalDate + " <br>Delivery Date : " + deliveryDate + " <br>Thanks";
+							sendmail
+							[
+								from :zoho.adminuserid
+								to :email
+								subject :"Project Created Successfully"
+								message :email_message
+							]
+							response.put("action","end");
+							response.put("replies",{"Project created successfully ! Please Check Your Email " + email,"I will send an alarm Email to the respective Operation teams","I have sent the details to your mail. Our representative will get back to you shortly"});
+							return response;
+						}
+					}
+				}
+			}
+		}
+		response.put("questions",{question});
+	}
+	else if(selected_option.equalsIgnoreCase("New Project") && context_id.equals("pm"))
+	{
+		if(!answers.containsKey("ProjectJobNumber"))
+		{
+			question = {"name":"ProjectJobNumber","replies":{"Please Enter Project Job Number"}};
+		}
+		else
+		{
+			ProjectJobNumber = answers.get("ProjectJobNumber").get("text");
+			if(!answers.containsKey("ProjectType"))
+			{
+				question = {"name":"ProjectType","replies":{"Please Enter Project Type"},"input":{"type":"select" , "options":{"Track","Ad Hoc"}}};
+			}
+			else
+			{
+				ProjectType = answers.get("ProjectType").get("text");
+				if(!answers.containsKey("projectPeriod"))
+				{
+					question = {"name":"projectPeriod","replies":{"Please enter project Period"},"input":{"type":"select","options":{"Weekly","Monthly","Quarterly"}}};
+				}
+				else
+				{
+					projectPeriod = answers.get("projectPeriod").get("text");
+					if(!answers.containsKey("DPscriptDate"))
+					{
+						question = {"name":"DPscriptDate","replies":{"Please Enter DP script Date"}};
+					}
+					else
+					{
+						DPscriptDate = answers.get("DPscriptDate").get("text");
+						if(!answers.containsKey("WorkStartDate"))
+						{
+							question = {"name":"WorkStartDate","replies":{"Please Enter Field Work Start Date"}};
+						}
+						else
+						{
+							WorkStartDate = answers.get("WorkStartDate").get("text");
+							if(!answers.containsKey("WorkEndDate"))
+							{
+								question = {"name":"WorkEndDate","replies":{"Please Enter Field Work End Date"}};
+							}
+							else
+							{
+								WorkEndDate = answers.get("WorkEndDate").get("text");
+								if(!answers.containsKey("CloseEndDate"))
+								{
+									question = {"name":"CloseEndDate","replies":{"Please Enter DP Close End Date"}};
+								}
+								else
+								{
+									CloseEndDate = answers.get("CloseEndDate").get("text");
+									if(!answers.containsKey("email"))
+									{
+										question = {"name":"email","replies":{"What is your email address?"}};
+									}
+									else
+									{
+										email = answers.get("email").get("text");
+										email_message = "Your Project created <br> Project Job Number : " + ProjectJobNumber + "<br>Project Type : " + ProjectType + "<br>Project Period : " + projectPeriod + "<br>DP Script Date : " + DPscriptDate +"<br>Work Start Date : " + WorkStartDate +"<br>Work End Date : " + WorkEndDate +"<br>Close End Date : " + CloseEndDate +" <br>Thanks";
+										sendmail
+										[
+											from :zoho.adminuserid
+											to :email
+											subject :"Project Created Successfully "
+											message :email_message
+										]
+										response.put("action","end");
+										response.put("replies",{"Project created successfully ! Please Check Your Email " + email,"I will send an alarm Email to the respective Operation teams","I have sent the details to your mail. Our representative will get back to you shortly"});
+										return response;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		response.put("questions",{question});
+	}
+	else
+	{
+		question = {"name":"selected_option","replies":{"That's nice. What would you like to do?"},"input":{"type":"select","options":{"Current Project","New Project"}}};
+		response.put("questions",{question});
+		return response;
+	}
 }
-else if(context_id.equals("nothing"))
-{
-	response.put("action","end");
-	response.put("replies",{"I'll be here to assist you"});
-}
+// else if(context_id.equals("pm"))
+// {
+// 	response.put("action","end");
+// 	response.put("replies",{"I'll be here to assist you"});
+// }
 return response;

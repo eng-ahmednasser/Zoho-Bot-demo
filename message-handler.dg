@@ -15,17 +15,18 @@ if(!msg.isNull())
 	if(msg.equalsIgnoreCase("cs") || msg.equalsIgnoreCase("find new project"))
 	{
 		response.put("action","context");
-		response.put("context_id","find_project");
-		question = {"name":"project_code","replies":{"Great! I just need a few details about your project","To begin with, what's your project Code?"}};
+		response.put("context_id","cs");
+		question = {"name":"selected_option","replies":{"That's nice. What would you like to do?"},"input":{"type":"select","options":{"Current Project","New Project"}}};
 		response.put("questions",{question});
+		return response;
 	}
 	else if(msg.equalsIgnoreCase("pm"))
 	{
-		// 		response.put("action","context");
-		// 		response.put("context_id","nothing");
-		response.put("action","end");
-		response.put("replies",{"Coming soon !","Have a nice day"});
-		// 		response.put("questions",{question});
+		response.put("action","context");
+		response.put("context_id","pm");
+		question = {"name":"selected_option","replies":{"That's nice. What would you like to do?"},"input":{"type":"select","options":{"Current Project","New Project"}}};
+		response.put("questions",{question});
+		return response;
 	}
 	else
 	{

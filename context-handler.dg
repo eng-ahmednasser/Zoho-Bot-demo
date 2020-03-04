@@ -2,6 +2,16 @@ response = Map();
 // info answers;
 // info response;
 info context_id;
+
+xcalendar = {
+"type" : "calendar",
+"time" : "false",
+"tz" : "true",
+"label" : "Select Date",
+"select_label" : "Select Date"
+};
+
+
 if(answers.containKey("thanks"))
 {
 	response.put("action","end");
@@ -54,14 +64,14 @@ if(context_id.equals("cs") || context_id.equals("pm"))
 				studyJN = answers.get("studyJN").get("text");
 				if(!answers.containsKey("finalDate"))
 				{
-					question = {"name":"finalDate","replies":{"When should we expect the final Materials?"}};
+					question = {"name":"finalDate","replies":{"When should we expect the final Materials?"},"input": xcalendar};
 				}
 				else
 				{
 					finalDate = answers.get("finalDate").get("text");
 					if(!answers.containsKey("deliveryDate"))
 					{
-						question = {"name":"deliveryDate","replies":{"What is the expected delivery date?"}};
+						question = {"name":"deliveryDate","replies":{"What is the expected delivery date?"},"input":xcalendar};
 					}
 					else
 					{
@@ -102,7 +112,7 @@ if(context_id.equals("cs") || context_id.equals("pm"))
 			ProjectJobNumber = answers.get("ProjectJobNumber").get("text");
 			if(!answers.containsKey("ProjectType"))
 			{
-				question = {"name":"ProjectType","replies":{"Please Enter Project Type"},"input":{"type":"select" , "options":{"Track","Ad Hoc"}}};
+				question = {"name":"ProjectType","replies":{"Please Enter Project Type"},"input":{"type":"select","options":{"Track","Ad Hoc"}}};
 			}
 			else
 			{
@@ -116,28 +126,28 @@ if(context_id.equals("cs") || context_id.equals("pm"))
 					projectPeriod = answers.get("projectPeriod").get("text");
 					if(!answers.containsKey("DPscriptDate"))
 					{
-						question = {"name":"DPscriptDate","replies":{"Please Enter DP script Date"}};
+						question = {"name":"DPscriptDate","replies":{"Please Enter DP script Date"},"input":xcalendar};
 					}
 					else
 					{
 						DPscriptDate = answers.get("DPscriptDate").get("text");
 						if(!answers.containsKey("WorkStartDate"))
 						{
-							question = {"name":"WorkStartDate","replies":{"Please Enter Field Work Start Date"}};
+							question = {"name":"WorkStartDate","replies":{"Please Enter Field Work Start Date"},"input":xcalendar};
 						}
 						else
 						{
 							WorkStartDate = answers.get("WorkStartDate").get("text");
 							if(!answers.containsKey("WorkEndDate"))
 							{
-								question = {"name":"WorkEndDate","replies":{"Please Enter Field Work End Date"}};
+								question = {"name":"WorkEndDate","replies":{"Please Enter Field Work End Date"},"input":xcalendar};
 							}
 							else
 							{
 								WorkEndDate = answers.get("WorkEndDate").get("text");
 								if(!answers.containsKey("CloseEndDate"))
 								{
-									question = {"name":"CloseEndDate","replies":{"Please Enter DP Close End Date"}};
+									question = {"name":"CloseEndDate","replies":{"Please Enter DP Close End Date"},"input":xcalendar};
 								}
 								else
 								{
@@ -149,7 +159,7 @@ if(context_id.equals("cs") || context_id.equals("pm"))
 									else
 									{
 										email = answers.get("email").get("text");
-										email_message = "Your Project created <br> Project Job Number : " + ProjectJobNumber + "<br>Project Type : " + ProjectType + "<br>Project Period : " + projectPeriod + "<br>DP Script Date : " + DPscriptDate +"<br>Work Start Date : " + WorkStartDate +"<br>Work End Date : " + WorkEndDate +"<br>Close End Date : " + CloseEndDate +" <br>Thanks";
+										email_message = "Your Project created <br> Project Job Number : " + ProjectJobNumber + "<br>Project Type : " + ProjectType + "<br>Project Period : " + projectPeriod + "<br>DP Script Date : " + DPscriptDate + "<br>Work Start Date : " + WorkStartDate + "<br>Work End Date : " + WorkEndDate + "<br>Close End Date : " + CloseEndDate + " <br>Thanks";
 										sendmail
 										[
 											from :zoho.adminuserid

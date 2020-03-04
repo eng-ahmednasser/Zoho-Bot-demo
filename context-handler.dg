@@ -1,0 +1,50 @@
+response = Map();
+info answers;
+if(context_id.equals("find_project"))
+{
+	response.put("action","context");
+	response.put("context_id","find_project");
+	project_code = answers.get("project_code").get("text");
+	if(!project_code.equalsIgnoreCase("123"))
+	{
+		question = {"name":"project_code","replies":{"Sorry,Project code:" + project_code + " doesn't exist ! ","Please try again"}};
+		response.put("questions",{question});
+		return response;
+	}
+	else
+	{
+		if(!answers.containsKey("thanks"))
+		{
+			replies = {"Total Achieved Sample : 100","Male Achieved Quota : 120","Fmale Achieved Quota : 120","SEC Achieved Quota : 10","QC Cancel Number : 100","Cities Achieved Quota : 200"};
+			// response.put("action","reply");
+						question = {"suggestions":replies};
+			question = {"name":"thanks","replies":replies,"suggestions":{"Thanks"}};
+			response.put("questions",{question});
+			response.put("suggestions",replies);
+			return response;
+		}
+		else
+		{
+			// 			if(answers.get("thanks").get("text").equalsIgnoreCase('Find new project'))
+			// 			{
+			// 					answers.deleteKey("thanks");
+			// 					answers.remove('thanks');
+			// 					response.put("action","context");
+			// 					response.put("context_id","project_code");
+			// 					question = {"name":"project_code","replies":{"Great! what's your project Code?"}};
+			// 					response.put("questions",{question});
+			// 					return response;
+			// 			}
+			response.put("action","end");
+			response.put("replies",{"Have a nice day"});
+			return response;
+		}
+	}
+	response.put("questions",{question});
+}
+else if(context_id.equals("nothing"))
+{
+	response.put("action","end");
+	response.put("replies",{"I'll be here to assist you"});
+}
+return response;

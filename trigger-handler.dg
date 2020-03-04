@@ -1,0 +1,5 @@
+response = Map();
+response.put("action","reply");
+response.put("replies",{"Are you looking for Help!","You are in the reight place , Please let me know are you PM or CS ?"});
+response.put("suggestions",{"CS","PM"});
+return response;

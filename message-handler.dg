@@ -1,0 +1,37 @@
+response = Map();
+msg = message.get("text");
+if(operation.equals("chat"))
+{
+	if(!msg.equalsIgnoreCase("cs") && !msg.equalsIgnoreCase("pm"))
+	{
+		response.put("action","reply");
+		response.put("replies",{"Are you looking for Help!","You are in the reight place , Please let me know are you PM or CS ?"});
+		response.put("suggestions",{"CS","PM"});
+		return response;
+	}
+}
+if(!msg.isNull())
+{
+	if(msg.equalsIgnoreCase("cs") || msg.equalsIgnoreCase("find new project"))
+	{
+		response.put("action","context");
+		response.put("context_id","find_project");
+		question = {"name":"project_code","replies":{"Great! I just need a few details about your project","To begin with, what's your project Code?"}};
+		response.put("questions",{question});
+	}
+	else if(msg.equalsIgnoreCase("pm"))
+	{
+		// 		response.put("action","context");
+		// 		response.put("context_id","nothing");
+		response.put("action","end");
+		response.put("replies",{"Coming soon !","Have a nice day"});
+		// 		response.put("questions",{question});
+	}
+	else
+	{
+		response.put("action","reply");
+		response.put("replies",{"Are you looking for Help!","You are in the reight place , Please let me 			know are you PM or CS ?"});
+		response.put("suggestions",{"CS","PM"});
+	}
+}
+return response;

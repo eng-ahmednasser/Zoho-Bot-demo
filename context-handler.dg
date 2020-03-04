@@ -78,8 +78,7 @@ if(context_id.equals("cs") || context_id.equals("pm"))
 						deliveryDate = answers.get("deliveryDate").get("text");
 						if(!answers.containsKey("email"))
 						{
-							question = {"name":"email","replies":{"What is your email address?"}};
-						}
+							question = {"name":"email","replies":{{"text":"Do you have an email address where we can reach you?","validate":{"format":"email","error":{"Please enter a valid email"}},"field_name":"siq_email"}}};						}
 						else
 						{
 							email = answers.get("email").get("text");
@@ -154,7 +153,7 @@ if(context_id.equals("cs") || context_id.equals("pm"))
 									CloseEndDate = answers.get("CloseEndDate").get("text");
 									if(!answers.containsKey("email"))
 									{
-										question = {"name":"email","replies":{"What is your email address?"}};
+										question = {"name":"email","replies":{{"text":"Do you have an email address where we can reach you?","validate":{"format":"email","error":{"Please enter a valid email"}},"field_name":"siq_email"}}};
 									}
 									else
 									{
@@ -187,9 +186,4 @@ if(context_id.equals("cs") || context_id.equals("pm"))
 		return response;
 	}
 }
-// else if(context_id.equals("pm"))
-// {
-// 	response.put("action","end");
-// 	response.put("replies",{"I'll be here to assist you"});
-// }
 return response;
